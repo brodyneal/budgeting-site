@@ -5,22 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budgeting Site</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="reset.css">
 </head>
 <body>
     <h1>Budget Builder</h1>
+    <main>
     <table id="table1">
         <tr>
-        <th>Bills</th>
+        <th id="thead">Total Monthly Income: $ <input type="number" class="incomeInput"></th>
         </tr>
-        <tbody id="tbdoy1">
-            <tr>
+        <tbody id="tbody1">
+            <tr id="addBtnRow">
                 <td><button id="addBtn">Add Row</button></td>
             </tr>
         <tr id="expenseRow">
-        <td >Expense: <input><button class="deleteBtn">Delete</button></td>
+        <td >Expense: <input type="text" class="expenseType">$<input type="number" class="expenseValue"><button class="deleteBtn">Delete</button></td>
     </tr>
         </tbody>
+        <tfoot id="totalRow">
+        <td>Total Expenses: $<span id="totalAmount">0.00</span></td>
+        <td>Remaining Balance: $<span id="balance">0.00</span></td>
+    </tfoot>
     </table>
-    <script src="app.js"></script>
+    </main>
+    <script src="app.js">
+    </script>
+    <footer>&copy; 2026 Brody Neal</footer>
 </body>
 </html>

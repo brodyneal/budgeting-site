@@ -1,0 +1,47 @@
+body {
+    background-color: rgb(86, 154, 209);
+    color: white;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    margin: 0;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.deleteBtn {
+    background-color: red;
+    color: white;
+}
+
+input {
+    background-color: rgb(228, 228, 228);
+}
+
+h1, #table1 {
+    display: grid;
+    place-items: center;
+    padding: 25px;
+}
+
+
+#addBtnRow {
+    display: flex;
+    justify-content: center;
+}
+
+td {
+    padding: 5px;
+}
+
+.expenseType {
+    width: 150px;
+    margin-right: 25px;
+}
+
+.expenseValue {
+    width: 80px;
+}
