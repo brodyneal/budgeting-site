@@ -35,7 +35,7 @@ input {
 h1, #table1 {
     display: grid;
     place-items: center;
-    padding: 25px;
+    padding: 10px;
 }
 
 
@@ -60,4 +60,7 @@ td {
 #addBtn {
     border-radius: 25px;
     cursor: pointer;
+    margin-left: 100px;
+    background-color: rgb(47, 92, 150);
+    color: white;
 }
