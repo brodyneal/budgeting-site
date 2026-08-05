@@ -1,10 +1,10 @@
-const expenseRow = document.querySelector("#expenseRow");
+const expenseRow = document.querySelector(".expenseRow");
 const addBtn = document.querySelector("#addBtn");
 const tbody1 = document.querySelector("#tbody1");
 const deleteBtn = document.querySelectorAll(".deleteBtn")
 const doneBtn = document.querySelectorAll(".doneBtn")
-const expenseType = document.querySelectorAll(".expenseType");
-const expenseValue = document.querySelectorAll(".expenseValue");
+const expenseType = document.querySelector(".expenseType");
+const expenseValue = document.querySelector(".expenseValue");
 const thead = document.querySelector("#thead");
 
 //adds row when Add button is clicked
@@ -14,6 +14,7 @@ clonedNode.querySelectorAll(".expenseType, .expenseValue").forEach(input => {
    input.value = "";
 });
 tbody1.appendChild(clonedNode);
+saveExpenses();
 });
 
 
@@ -23,12 +24,13 @@ tbody1.addEventListener("click", (event) => {
     const row = event.target.closest('tr');
     row.remove();
     updateBudget();
+    saveExpenses();
    };
 });
 
 //updates total of expenses and remaining balance
 
-function updateBudget(){
+function updateBudget () {
    const income = Number(document.querySelector(".incomeInput").value) || 0;
    let total = 0;
    document.querySelectorAll(".expenseValue").forEach(input => {
@@ -42,11 +44,64 @@ function updateBudget(){
 tbody1.addEventListener("input", () => {
    if (event.target.classList.contains("expenseValue")) {
       updateBudget();
-   };
-});
-
-thead.addEventListener("input", () => {
-   if (event.target.classList.contains("incomeInput")) {
+      saveExpenses();
+      };
+      if (event.target.classList.contains("incomeInput")) {
       updateBudget();
    };
 });
+
+//saves all input fields on refresh in some frustrating way
+
+function saveIncome () {
+   const income = document.querySelector(".incomeInput").value;
+   sessionStorage.setItem("income", income);
+};
+
+document.querySelector(".incomeInput").addEventListener("input", () => {
+   saveIncome();
+   updateBudget();
+})
+
+
+function saveExpenses () {
+   const expenses = [];
+   document.querySelectorAll(".expenseRow").forEach(row => {
+      expenses.push({
+         type: row.querySelector(".expenseType").value,
+         amount: row.querySelector(".expenseValue").value
+      });
+   });
+   sessionStorage.setItem("expenses", JSON.stringify(expenses));
+};
+
+
+function loadIncome () {
+const savedIncome = sessionStorage.getItem("income");
+
+if (savedIncome !== null){
+   document.querySelector(".incomeInput").value = savedIncome;
+};
+};
+const savedExpense = JSON.parse(sessionStorage.getItem("expenses"));
+
+function loadExpenses () {
+   const savedExpenses = JSON.parse(sessionStorage.getItem("expenses")) || [];
+
+   expenseRow.querySelector(".expenseType").value = savedExpenses[0].type;
+   expenseRow.querySelector(".expenseValue").value = savedExpenses[0].amount;
+   
+   for (let i = 1; i < savedExpenses.length; i++) {
+      const clonedNode = expenseRow.cloneNode(true);
+
+      clonedNode.querySelector(".expenseType").value = savedExpenses[i].type;
+      clonedNode.querySelector(".expenseValue").value = savedExpenses[i].amount;
+
+      tbody1.appendChild(clonedNode);
+   };
+   updateBudget();
+};
+
+loadIncome();
+loadExpenses();
+updateBudget();
